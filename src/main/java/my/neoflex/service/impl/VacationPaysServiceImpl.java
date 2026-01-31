@@ -40,13 +40,13 @@ public class VacationPaysServiceImpl implements VacationPaysService {
         logger.info("Метод расчета отпускных");
         validateRequest(averageSalary, vacationDays, startVacationDate);
 
-        int workingDays = startVacationDate == null ?
+        int days = startVacationDate == null ?
                 vacationDays : calculateWorkingDays(startVacationDate, vacationDays);
 
         BigDecimal dailySalary = averageSalary
                 .divide(AVERAGE_DAYS_IN_MONTH, 10, RoundingMode.HALF_UP);
 
-        BigDecimal vacationPay = dailySalary.multiply(BigDecimal.valueOf(workingDays))
+        BigDecimal vacationPay = dailySalary.multiply(BigDecimal.valueOf(days))
                 .setScale(2, RoundingMode.HALF_UP);
 
         VacationPayResponse response = new VacationPayResponse();
